@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sistema',
+    'general',
+    'ticket',
 ]
 
 MIDDLEWARE = [
@@ -74,10 +79,25 @@ WSGI_APPLICATION = 'secretaria.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+env = environ.Env(
+    DATABASE_DATA_NAME=(str, ""),
+    DATABASE_DATA_USER=(str, ""),
+    DATABASE_DATA_PASS=(str, ""),
+    DATABASE_DATA_HOST=(str, ""),
+    DATABASE_DATA_PORT=(str, ""),
+)
+
+environ.Env.read_env("/var/www/envvar/configparameters_secretaria")
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env('DATABASE_DATA_NAME'),
+        "USER": env('DATABASE_DATA_USER'),
+        "PASSWORD": env('DATABASE_DATA_PASS'),
+        "HOST": env('DATABASE_DATA_HOST'),
+        "PORT": env('DATABASE_DATA_PORT'),
     }
 }
 
@@ -104,9 +124,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-AR'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
 USE_I18N = True
 
@@ -117,6 +137,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = (
+    BASE_DIR / 'static/',
+)
+STATIC_ROOT = '/var/www/static-secretaria/'
+
+MEDIA_ROOT = '/var/www/media-secretaria/'
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
