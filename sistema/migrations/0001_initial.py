@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('auth', '0015_group_home_group_icon'),
         ('general', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]

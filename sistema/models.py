@@ -23,6 +23,7 @@ class MenuGrupo(models.Model):
     grupo = models.ForeignKey(Group, verbose_name='Grupo', on_delete=models.CASCADE)
     url = models.CharField(max_length=150, null=True, blank=True, verbose_name="url")
     nombre = models.CharField(max_length=150, null=True, blank=True, verbose_name="nombre")
+    icon = models.CharField(max_length=150, null=True, blank=True, verbose_name="Icono")
 
     def __str__(self):
         return self.grupo.name + ' ' + self.nombre
@@ -33,6 +34,7 @@ class Ayuda(models.Model):
     nombre = models.CharField(max_length=150, null=True, blank=True, verbose_name="nombre")
     descripcion = models.CharField(max_length=10000, null=True, blank=True, verbose_name="Descripción")
     url = models.CharField(max_length=150, null=True, blank=True, verbose_name="url")
+    icon = models.CharField(max_length=150, null=True, blank=True, verbose_name="Icono")
 
     def __str__(self):
         return self.nombre
