@@ -1,2 +1,4 @@
 
 general/migrations/__pycache__/
+
+*.pyc

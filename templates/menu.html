@@ -11,7 +11,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Inicio Texto Titulo (Barra de menu lateral izquierdaß) -->
+                            <!-- Inicio Texto Titulo (Barra de menu lateral izquierda) -->
                             <div class="ml-3.5 font-medium transition-opacity group-[.side-menu--collapsed.side-menu--on-hover]:xl:opacity-100 group-[.side-menu--collapsed]:xl:opacity-0">
                                 Hacienda
                             </div>
@@ -25,7 +25,7 @@
                         <ul class="scrollable">
                             {% for grupo in user.groups.all %}
                             <li class="side-menu__divider">
-                                {{ grupo }}
+                                {{ grupo|upper }}
                             </li>
                                 {% for menu in grupo.menugrupo_set.all %}
                                     <li>

@@ -24,4 +24,5 @@ urlpatterns = [
     path('', login_required(sistema.views.SistemaHome.as_view()), name="index"),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('sistema/', include('sistema.urls')),
 ]

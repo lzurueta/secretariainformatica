@@ -13,6 +13,8 @@ class SistemaHome(View):
         return context
 
     def get(self, request, *args, **kwargs):
+        if request.user.groups.first():
+            return redirect(request.user.groups.first().home)
         template_name = 'sistema/profile.html'
         return render(request, template_name, self.get_context_data())
 
