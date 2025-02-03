@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import path, include
+from django.conf.urls.static import static
 
 import sistema.views
+from secretaria import settings
 
 urlpatterns = [
     path('', login_required(sistema.views.SistemaHome.as_view()), name="index"),
@@ -26,3 +28,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('sistema/', include('sistema.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,16 @@
 {% extends "base.html" %}
+{% block navbar %}
+    <nav aria-label="breadcrumb" class="flex hidden flex-1 xl:block">
+        <ol class="flex items-center text-theme-1 dark:text-slate-300 text-white/90">
+            <li class="">
+                <a href="/">Sistema</a>
+            </li>
+            <li class="relative ml-5 pl-0.5 before:content-[''] before:w-[14px] before:h-[14px] before:bg-chevron-white before:transform before:rotate-[-90deg] before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0 dark:before:bg-chevron-white text-white/70">
+                <a href="">Profile</a>
+            </li>
+        </ol>
+    </nav>
+{% endblock %}
 {% block main %}
 <div class="content transition-[margin,width] duration-100 xl:pl-3.5 pt-[54px] pb-16 relative z-10 group mode content--compact xl:ml-[275px] mode--light [&.content--compact]:xl:ml-[91px]">
                 <div class="mt-16 px-5">

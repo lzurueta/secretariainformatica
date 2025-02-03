@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -29,5 +30,13 @@ class ProfileView(View):
     def get(self, request, *args, **kwargs):
         template_name = 'sistema/profile.html'
         return render(request, template_name, self.get_context_data())
+
+
+class logout_view(View):
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        # Redirect to a success page.
+        return redirect('index')
 
 
