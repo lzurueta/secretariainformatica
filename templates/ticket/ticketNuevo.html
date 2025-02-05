@@ -1,0 +1,64 @@
+<div class="modal-header">
+    <h4 class="title" id="largeModalLabel">{{ titulo }}</h4>
+</div>
+<form id="form_alta" action="{% url 'TicketHomeGestion' %}" method="post" enctype="multipart/form-data">
+
+    <div class="modal-body">
+        {% csrf_token %}
+        {% if form.instance.id %}
+            <input type="hidden" id="id" name="id" value="{{ form.instance.id }}">
+        {% endif %}
+        <div class="row clearfix">
+            <div class="col-lg-8 col-md-8">
+                <div class="input-group input-group-sm mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Cuenta</span>
+                    </div>
+                     {{ form.cuenta }}
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="input-group input-group-sm mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Código</span>
+                    </div>
+                     {{ form.codigo }}
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+
+            <div class="col-lg-4 col-md-4">
+                <div class="input-group input-group-sm mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Número Desde</span>
+                    </div>
+                     {{ form.numero_desde }}
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Número Hasta</span>
+                    </div>
+                     {{ form.numero_hasta }}
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Habilitada</span>
+                    </div>
+                     {{ form.habilitada }}
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+</form>

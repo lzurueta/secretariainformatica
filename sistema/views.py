@@ -23,7 +23,7 @@ class ProfileView(View):
 
     def get_context_data(self, **kwargs):
         context = {
-            'titulo': "Profile",
+            'titulo': "Perfil",
         }
         return context
 
