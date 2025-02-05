@@ -138,24 +138,12 @@
     </div>
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $(".js-editar").click(function(){
-            var btn = $(this);
-            $.ajax({
-              url: '{% url 'TicketHomeGestion' %}',
-              type: 'get',
-              data: {id: btn.attr("data-id")},
-              dataType: 'json',
-              beforeSend: function () {
-                $("#modal-alta .modal-content").html("");
-                $("#modal-alta").modal("show");
-              },
-              success: function (data) {
-                $("#modal-alta .modal-content").html(data.html_form);
-              }
-            });
-        });
-    });
+    var $ = jQuery.noConflict();
 </script>
+
+
+
 {% endblock %}

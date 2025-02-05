@@ -6,6 +6,17 @@ from ticket.forms import TicketForm
 from ticket.models import NivelServicio, Ticket
 
 
+from django.http import JsonResponse
+from django.shortcuts import render
+
+def testajax(request):
+    if request.GET.get("id"):
+        html_form = render(request, "ticket_form.html", {}).content.decode("utf-8")
+        return JsonResponse({"html_form": html_form})  # Asegura que sea un JSON válido
+    return JsonResponse({"error": "ID no proporcionado"}, status=400)
+
+
+
 # Create your views here.
 class TicketHomeGestion(View):
 
