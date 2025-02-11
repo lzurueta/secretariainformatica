@@ -1,0 +1,146 @@
+{% load static %}
+
+    <div class="modal-body">
+
+            <div>
+
+            <div class="box box--stacked col-span-12 flex flex-col p-5 md:col-span-6 xl:col-span-4">
+                {{ titulo }} Nro {{ ticket.id }}
+                <div class="mt-auto flex flex-col gap-3 border-t border-dashed border-slate-300/70 pt-5">
+                    <div class="flex items-center">
+                        <div class="text-slate-500">Cargado: {{ ticket.fecha_creacion }} Fuente: {{ ticket.usuario_fuente }}</div>
+                        <div class="ml-auto">
+                            {% if  ticket.usuario_solicitante %}
+                                <div class="flex items-center rounded-md border border-success/10 bg-success/10 px-1.5 py-px text-xs text-success">
+                                    <span class="-mt-px">{{ ticket.usuario_solicitante.username }} - {{ ticket.usuario_solicitante.last_name }}, {{ ticket.usuario_solicitante.first_name }}</span>
+                                </div>
+                            {% else %}
+                                <div class="flex items-center rounded-md border border-danger/10 bg-danger/10 px-1.5 py-px text-xs text-da">
+                                    <span class="-mt-px">Solicitante no registrado</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="text-slate-500">Asunto:  {{ ticket.tema_ayuda }}</div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <div class="text-slate-500">Detalle: {{ ticket.tema_ayuda_detalle }}</div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
+                    <div class="mb-2 inline-block sm:mb-0 sm:mr-5 sm:text-right xl:mr-14 xl:w-60">
+                        <div class="text-left">
+                            <div class="flex items-center">
+                                <div class="font-medium">Solicitante</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if  ticket.usuario_solicitante %}
+                        <div class="mt-3 w-full flex-1 xl:mt-0">
+                            <div class="mt-3 w-full flex-1 xl:mt-0">
+                                <div data-tw-merge="" class="flex items-center">
+                                    {{ ticket.usuario_solicitante.username }} - {{ ticket.usuario_solicitante.last_name }}, {{ ticket.usuario_solicitante.first_name }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="mt-3 w-full flex-1 xl:mt-0">
+                            <div class="flex flex-col items-center md:flex-row text-danger">
+                                <input data-tw-merge="" id="usuario_solicitante" required name="usuario_solicitante" type="text" placeholder="{{ ticket.usuario_solicitante_temp }}" class="disabled:bg-slate-100 disabled:cursor-not-allowed dark:disabled:bg-darkmode-800/50 dark:disabled:border-transparent [&[readonly]]:bg-slate-100 [&[readonly]]:cursor-not-allowed [&[readonly]]:dark:bg-darkmode-800/50 [&[readonly]]:dark:border-transparent transition duration-200 ease-in-out w-full text-sm border-slate-200 shadow-sm rounded-md placeholder:text-slate-400/90 focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 dark:placeholder:text-slate-500/80 [&[type='file']]:border file:mr-4 file:py-2 file:px-4 file:rounded-l-md file:border-0 file:border-r-[1px] file:border-slate-100/10 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-500/70 hover:file:bg-200 group-[.form-inline]:flex-1 group-[.input-group]:rounded-none group-[.input-group]:[&:not(:first-child)]:border-l-transparent group-[.input-group]:first:rounded-l group-[.input-group]:last:rounded-r group-[.input-group]:z-10 first:rounded-b-none last:-mt-px last:rounded-t-none focus:z-10 first:md:rounded-r-none first:md:rounded-bl-md last:md:-ml-px last:md:mt-0 last:md:rounded-l-none last:md:rounded-tr-md [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:rounded-none [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:md:mt-0">
+                            </div>
+                        </div>
+
+                    {% endif %}
+                </div>
+                <div class="mb-6 border-b border-dashed border-slate-300/70 pb-5 text-[0.94rem] font-medium"></div>
+                <form id="form_alta" action="{% url 'TicketDetalle' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="ticketId" value="{{ ticket.id }}">
+                    <div class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
+                        <div class="mb-2 inline-block sm:mb-0 sm:mr-5 sm:text-right xl:mr-14 xl:w-60">
+                            <div class="text-left">
+                                <div class="flex items-center">
+                                    <div class="font-medium">Nivel de Servicio</div>
+                                    <div class="ml-2.5 rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-darkmode-300 dark:text-slate-400">
+                                        Requerido
+                                    </div>
+                                </div>
+                                <div class="mt-1.5 text-xs leading-relaxed text-slate-500/80 xl:mt-3">
+                                     Texto descriptivo.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 w-full flex-1 xl:mt-0">
+                            <select name="nivel_servicio" id="nivel_servicio" data-placeholder="Seleccione" class="tom-select w-full">
+                                {% for nivel in nivele_servicio %}
+                                    <option value="{{ nivel.id }}">{{ nivel.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
+                        <div class="mb-2 inline-block sm:mb-0 sm:mr-5 sm:text-right xl:mr-14 xl:w-60">
+                            <div class="text-left">
+                                <div class="flex items-center">
+                                    <div class="font-medium" title="Identifique el motivo principal del problema. Describa el origen de la falla y cualquier factor que haya contribuido a su ocurrencia.">Análisis Causa Raíz</div>
+                                    <div class="ml-2.5 rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-darkmode-300 dark:text-slate-400">
+                                        Requerido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 w-full flex-1 xl:mt-0">
+                            <div class="flex flex-col items-center md:flex-row">
+                                <input data-tw-merge="" id="causaRaiz" required name="causaRaiz" type="text" placeholder="Identifique el motivo principal del problema. Describa el origen de la falla y cualquier factor que haya contribuido a su ocurrencia." class="disabled:bg-slate-100 disabled:cursor-not-allowed dark:disabled:bg-darkmode-800/50 dark:disabled:border-transparent [&[readonly]]:bg-slate-100 [&[readonly]]:cursor-not-allowed [&[readonly]]:dark:bg-darkmode-800/50 [&[readonly]]:dark:border-transparent transition duration-200 ease-in-out w-full text-sm border-slate-200 shadow-sm rounded-md placeholder:text-slate-400/90 focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 dark:placeholder:text-slate-500/80 [&[type='file']]:border file:mr-4 file:py-2 file:px-4 file:rounded-l-md file:border-0 file:border-r-[1px] file:border-slate-100/10 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-500/70 hover:file:bg-200 group-[.form-inline]:flex-1 group-[.input-group]:rounded-none group-[.input-group]:[&:not(:first-child)]:border-l-transparent group-[.input-group]:first:rounded-l group-[.input-group]:last:rounded-r group-[.input-group]:z-10 first:rounded-b-none last:-mt-px last:rounded-t-none focus:z-10 first:md:rounded-r-none first:md:rounded-bl-md last:md:-ml-px last:md:mt-0 last:md:rounded-l-none last:md:rounded-tr-md [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:rounded-none [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:md:mt-0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
+                        <div class="mb-2 inline-block sm:mb-0 sm:mr-5 sm:text-right xl:mr-14 xl:w-60">
+                            <div class="text-left">
+                                <div class="flex items-center">
+                                    <div class="font-medium">Asignacion manual</div>
+                                    <div class="ml-2.5 rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-darkmode-300 dark:text-slate-400">
+                                        Requerido
+                                    </div>
+                                </div>
+                                <div class="mt-1.5 text-xs leading-relaxed text-slate-500/80 xl:mt-3">
+                                    Texto descriptivo.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 w-full flex-1 xl:mt-0">
+                            <select name="asignado_a" id="asignado_a" data-placeholder="Select your country" class="tom-select w-full">
+                                {% for asignado in asignado_a %}
+                                    <option value="{{ asignado.id }}">{{ asignado.last_name }}, {{ asignado.first_name }} - {{ asignado.profile__area__nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                <div class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
+                        <div class="mb-2 inline-block sm:mb-0 sm:mr-5 sm:text-right xl:mr-14 xl:w-60">
+                            <div class="text-left">
+                                <div class="flex items-center">
+                                    <div class="font-medium" title="Detalle las acciones realizadas para resolver el inconveniente. Incluya medidas correctivas y cualquier ajuste implementado.">Descripción de la Acción Aplicada</div>
+                                    <div class="ml-2.5 rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-darkmode-300 dark:text-slate-400">
+                                        Requerido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 w-full flex-1 xl:mt-0">
+                            <div class="flex flex-col items-center md:flex-row">
+                                <input data-tw-merge="" id="accionAplicada" required name="accionAplicada" type="text" placeholder="Detalle las acciones realizadas para resolver el inconveniente. Incluya medidas correctivas y cualquier ajuste implementado." class="disabled:bg-slate-100 disabled:cursor-not-allowed dark:disabled:bg-darkmode-800/50 dark:disabled:border-transparent [&[readonly]]:bg-slate-100 [&[readonly]]:cursor-not-allowed [&[readonly]]:dark:bg-darkmode-800/50 [&[readonly]]:dark:border-transparent transition duration-200 ease-in-out w-full text-sm border-slate-200 shadow-sm rounded-md placeholder:text-slate-400/90 focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 dark:placeholder:text-slate-500/80 [&[type='file']]:border file:mr-4 file:py-2 file:px-4 file:rounded-l-md file:border-0 file:border-r-[1px] file:border-slate-100/10 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-500/70 hover:file:bg-200 group-[.form-inline]:flex-1 group-[.input-group]:rounded-none group-[.input-group]:[&:not(:first-child)]:border-l-transparent group-[.input-group]:first:rounded-l group-[.input-group]:last:rounded-r group-[.input-group]:z-10 first:rounded-b-none last:-mt-px last:rounded-t-none focus:z-10 first:md:rounded-r-none first:md:rounded-bl-md last:md:-ml-px last:md:mt-0 last:md:rounded-l-none last:md:rounded-tr-md [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:rounded-none [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:md:mt-0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex border-t border-dashed border-slate-300/70 pt-5 md:justify-end">
+                        <button type="submit" data-tw-merge="" class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed text-primary dark:border-primary [&:hover:not(:disabled)]:bg-primary/10 w-full border-primary/50 px-4 md:w-auto">Asignar ticket</button>
+                    </div>
+                </form>
+            </div>
+    </div>

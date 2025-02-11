@@ -1,13 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import path
-from .views import TicketNuevo, obtener_usuario_por_cuit, testajax
-
 from . import views
 
 urlpatterns = [
     path('TicketHome', login_required(views.TicketHome.as_view()), name="TicketHome"),
-    path('TicketHomeGestion', login_required(views.TicketHomeGestion.as_view()), name="TicketHomeGestion"),
-    path('testajax', testajax, name="testajax"),
-    path('TicketNuevo/', login_required(views.TicketNuevo.as_view()), name="TicketNuevo"),
-    path('obtener-usuario', obtener_usuario_por_cuit, name='obtener_usuario_por_cuit'),
+    path('TicketHome/<int:opcion>/', login_required(views.TicketHome.as_view()), name="TicketHome"),
+    path('TicketHomeGestion/', login_required(views.TicketHomeGestion.as_view()), name="TicketHomeGestionNoID"),
+    path('TicketHomeGestion/<int:opcion>/', login_required(views.TicketHomeGestion.as_view()), name="TicketHomeGestion"),
+    path('TicketNuevo', login_required(views.TicketNuevo.as_view()), name="TicketNuevo"),
+    path('TicketDetalle', login_required(views.TicketDetalle.as_view()), name="TicketDetalle"),
+    path('TicketTrabajar/<int:ticket>/', login_required(views.TicketTrabajar.as_view()), name="TicketTrabajar"),
+    path('TickeTrasferir', login_required(views.TickeTrasferir.as_view()), name="TickeTrasferir"),
 ]

@@ -18,23 +18,20 @@
             <div class="col-span-12">
                 <div class="flex flex-col gap-y-3 md:h-10 md:flex-row md:items-center">
                     <div class="flex flex-col gap-x-3 gap-y-2 sm:flex-row md:ml-auto">
-                        <a href="{% url 'TicketNuevo' %}" class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary group-[.mode--light]:!border-transparent group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200">
-                            <i data-lucide="external-link" class="mr-3 h-4 w-4 stroke-[1.3]"></i>
-                            Nuevo Ticket</a>
+                        <a id="open-modal-btn" href="#" data-id="1" class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary mb-2 mr-1 js-nuevo">
+                        <i data-lucide="external-link" class="mr-3 h-4 w-4 stroke-[1.3]"></i> Nuevo Ticket</a>
                     </div>
                 </div>
                 <div class="mt-3.5 grid grid-cols-12 gap-x-6 gap-y-10">
                     <div class="relative col-span-12 xl:col-span-3">
                         <div class="sticky top-[104px]">
                             <div class="box box--stacked flex flex-col px-5 pb-6 pt-5">
-                                <a href="dagger-settings.html" class="flex items-center py-3 first:-mt-3 last:-mb-3 [&.active]:text-primary [&.active]:font-medium hover:text-primary">
+                                {% for estadosTickets in estados %}
+                                <a href="{% url 'TicketHomeGestion' opcion=estadosTickets.id %}" class="flex items-center py-3 first:-mt-3 last:-mb-3 [&.active]:text-primary [&.active]:font-medium hover:text-primary">
                                     <i data-tw-merge="" data-lucide="app-window" class="mr-3 h-4 w-4 stroke-[1.3]"></i>
-                                    Resumen de Ticket
+                                    Tickets {{ estadosTickets.nombre }}
                                 </a>
-                                <a href="{% url 'TicketHome' %}" class="flex items-center py-3 first:-mt-3 last:-mb-3 [&.active]:text-primary [&.active]:font-medium hover:text-primary">
-                                    <i data-tw-merge="" data-lucide="app-window" class="mr-3 h-4 w-4 stroke-[1.3]"></i>
-                                    Mis Ticket
-                                </a>
+                                {% endfor %}
                             </div>
 
                         </div>
@@ -42,7 +39,7 @@
                     <div class="col-span-12 flex flex-col gap-y-7 xl:col-span-9">
                         <div class="box box--stacked flex flex-col p-5">
                             <div class="mb-6 flex items-center border-b border-dashed border-slate-300/70 pb-5 text-[0.94rem] font-medium">
-                                Ticket abiertos
+                                {{ tituloOpcion }}
                             </div>
                             <div>
                                 <div class="col-span-12">
@@ -68,7 +65,7 @@
                                                         <div class="mb-1 whitespace-nowrap text-xs text-slate-500">
                                                             {{ tickets.usuario_solicitante.username }}
                                                         </div>
-                                                        <a class="flex items-center text-primary" href="">
+                                                        <a class="flex items-center text-primary" href="{% url 'TicketTrabajar' ticket=tickets.id %}">
                                                             <i data-tw-merge="" data-lucide="external-link" class="h-3.5 w-3.5 stroke-[1.7]"></i>
                                                             <div class="ml-1.5 whitespace-nowrap">
                                                                 {{ tickets.usuario_solicitante.last_name }}, {{ tickets.usuario_solicitante.first_name }}
@@ -109,9 +106,10 @@
                                                                 </button>
                                                                 <div data-transition="" data-selector=".show" data-enter="transition-all ease-linear duration-150" data-enter-from="absolute !mt-5 invisible opacity-0 translate-y-1" data-enter-to="!mt-1 visible opacity-100 translate-y-0" data-leave="transition-all ease-linear duration-150" data-leave-from="!mt-1 visible opacity-100 translate-y-0" data-leave-to="absolute !mt-5 invisible opacity-0 translate-y-1" class="dropdown-menu absolute z-[9999] hidden">
                                                                     <div data-tw-merge="" class="dropdown-content rounded-md border-transparent bg-white p-2 shadow-[0px_3px_10px_#00000017] dark:border-transparent dark:bg-darkmode-600 w-40">
-                                                                        <a class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item">
+
+                                                                        <a id="open-modal-btn" href="#" data-id="{{ tickets.id }}" class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item js-detalle">
                                                                             <i data-tw-merge="" data-lucide="wallet-cards" class="stroke-[1] mr-2 h-4 w-4"></i>
-                                                                            Ver Detalle</a>
+                                                                            Análisis</a>
                                                                         <a class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item">
                                                                             <i data-tw-merge="" data-lucide="file-signature" class="stroke-[1] mr-2 h-4 w-4"></i>
                                                                             Trabajar</a>
@@ -137,4 +135,77 @@
         </div>
     </div>
 </div>
+
+    <!-- Modal -->
+<div data-tw-backdrop="" aria-hidden="true" tabindex="-1" style="z-index: 1050" id="superlarge-modal-size-preview" class="modal group bg-gradient-to-b from-theme-1/50 via-theme-2/50 to-black/50 transition-[visibility,opacity] w-screen h-screen fixed left-0 top-0 [&:not(.show)]:duration-[0s,0.2s] [&:not(.show)]:delay-[0.2s,0s] [&:not(.show)]:invisible [&:not(.show)]:opacity-0 [&.show]:visible [&.show]:opacity-100 [&.show]:duration-[0s,0.4s]">
+    <div data-tw-merge class="w-[90%] mx-auto bg-white relative rounded-md shadow-md transition-[margin-top,transform] duration-[0.4s,0.3s] -mt-16 group-[.show]:mt-16 group-[.modal-static]:scale-[1.05] dark:bg-darkmode-600 sm:w-[600px] lg:w-[900px] p-10 text-center">
+        <div id="modal-content">
+            ¡Este es un modal grande y dinámico!
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        // Abrir el modal con efecto
+        $("#open-modal-btn").click(function(event){
+            event.preventDefault();
+            $("#superlarge-modal-size-preview").addClass("show");
+        });
+
+        // Cerrar el modal al hacer clic en el botón de cerrar
+        $("#close-modal-btn").click(function(){
+            $("#superlarge-modal-size-preview").removeClass("show");
+        });
+
+        // Cerrar modal al hacer clic fuera del contenido
+        $("#superlarge-modal-size-preview").click(function(event){
+            if(event.target === this) {
+                $(this).removeClass("show");
+            }
+        });
+
+        // Cargar contenido dinámico con AJAX
+        $(".js-nuevo").click(function(){
+            var btn = $(this);
+            $.ajax({
+                url: '{% url 'TicketNuevo' %}',
+                type: 'get',
+                data: {id: btn.attr("data-id")},
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#modal-content").html("Cargando...");
+                    $("#superlarge-modal-size-preview").addClass("show");
+                },
+                success: function (data) {
+                    $("#modal-content").html(data.html_form);
+                },
+                error: function () {
+                    $("#modal-content").html("Error al cargar el contenido.");
+                }
+            });
+        });
+
+        $(".js-detalle").click(function(){
+            var btn = $(this);
+            $.ajax({
+                url: '{% url 'TicketDetalle' %}',
+                type: 'get',
+                data: {id: btn.attr("data-id")},
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#modal-content").html("Cargando...");
+                    $("#superlarge-modal-size-preview").addClass("show");
+                },
+                success: function (data) {
+                    $("#modal-content").html(data.html_form);
+                },
+                error: function () {
+                    $("#modal-content").html("Error al cargar el contenido.");
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
