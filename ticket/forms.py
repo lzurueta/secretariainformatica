@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ministerio, NivelServicio, EstadoTicket, Ticket, TicketMovimiento, TickeTrasferir
+from .models import Ministerio, NivelServicio, EstadoTicket, Ticket, TicketMovimiento, TickeTransferencias
 
 
 class MinisterioForm(forms.ModelForm):
@@ -83,7 +83,7 @@ class TicketMovimientoFormNuevo(forms.ModelForm):
 
 class TickeTrasferirForm(forms.ModelForm):
     class Meta:
-        model = TickeTrasferir
+        model = TickeTransferencias
         fields = [
             'ticket',
             'operador_anterior',

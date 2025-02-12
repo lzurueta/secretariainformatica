@@ -11,4 +11,5 @@ urlpatterns = [
     path('TicketDetalle', login_required(views.TicketDetalle.as_view()), name="TicketDetalle"),
     path('TicketTrabajar/<int:ticket>/', login_required(views.TicketTrabajar.as_view()), name="TicketTrabajar"),
     path('TickeTrasferir', login_required(views.TickeTrasferir.as_view()), name="TickeTrasferir"),
+    path('TicketResumen/<int:ticket>/', login_required(views.TicketResumen.as_view()), name="TicketResumen"),
 ]

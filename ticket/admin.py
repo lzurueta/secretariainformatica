@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ministerio, NivelServicio, EstadoTicket, Ticket, TicketMovimiento, TickeTrasferir
+from .models import Ministerio, NivelServicio, EstadoTicket, Ticket, TicketMovimiento, TickeTransferencias
 
 
 class MinisterioAdmin(admin.ModelAdmin):
@@ -12,7 +12,7 @@ class NivelServicioAdmin(admin.ModelAdmin):
     list_filter = ('tiempo_respuesta',)
 
 class EstadoTicketAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre')
+    list_display = ('id', 'nombre', 'color')
     search_fields = ('nombre',)
 
 class TicketAdmin(admin.ModelAdmin):
@@ -29,7 +29,7 @@ class TicketMovimientoAdmin(admin.ModelAdmin):
     ordering = ('-fecha',)
 
 
-class TickeTrasferirAdmin(admin.ModelAdmin):
+class TickeTransferenciasAdmin(admin.ModelAdmin):
     list_display = ('id', 'ticket', 'operador_anterior', 'operador_nuevo', 'fecha')
     search_fields = ('ticket', 'operador_nuevo', 'operador_anterior',)
     list_filter = ('operador_nuevo',)
@@ -41,4 +41,4 @@ admin.site.register(NivelServicio, NivelServicioAdmin)
 admin.site.register(EstadoTicket, EstadoTicketAdmin)
 admin.site.register(Ticket, TicketAdmin)
 admin.site.register(TicketMovimiento, TicketMovimientoAdmin)
-admin.site.register(TickeTrasferir, TickeTrasferirAdmin)
+admin.site.register(TickeTransferencias, TickeTransferenciasAdmin)

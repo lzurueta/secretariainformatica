@@ -23,6 +23,7 @@ class NivelServicio(models.Model):
 
 class EstadoTicket(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
+    color = models.CharField(max_length=10, blank=True,  null=True)
 
     def __str__(self):
         return self.nombre
@@ -65,7 +66,7 @@ class TicketMovimiento(models.Model):
         return f"Movimiento {self.id} - Ticket {self.ticket.id} - {self.estado_nuevo}"
 
 
-class TickeTrasferir(models.Model):
+class TickeTransferencias(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="ticketTrasferir")
     operador_anterior = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='operadorAnterio')
     operador_nuevo = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='operadorNuevo')
@@ -73,4 +74,4 @@ class TickeTrasferir(models.Model):
     comentario = models.TextField()
 
     def __str__(self):
-        return f"Trasferencia {self.id} - Ticket {self.ticket.id} - {self.operador_nuevo}"
+        return f"Transferencias {self.id} - Ticket {self.ticket.id} - {self.estado_nuevo}"

@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.views import View
 from ticket.forms import TicketForm, TicketFormRecepcion, TicketMovimientoFormNuevo, TickeTrasferirForm
-from ticket.models import NivelServicio, Ticket, EstadoTicket, TicketMovimiento
+from ticket.models import NivelServicio, Ticket, EstadoTicket, TicketMovimiento, TickeTransferencias
 
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -78,6 +78,23 @@ class TicketHome(View):
                                                                                          'profile__area__nombre')
             }
             return redirect('TicketHome')
+
+
+class TicketResumen(View):
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'titulo': "Soporte",
+            'tituloOpcion': "Tickets ",
+            'ticket': Ticket.objects.get(id=self.kwargs.get('ticket')),
+            'ticketMovimiento': TicketMovimiento.objects.filter(ticket=self.kwargs.get('ticket')).order_by('fecha'),
+            'tickeTransferencias': TickeTransferencias.objects.filter(ticket=self.kwargs.get('ticket')).order_by('-fecha'),
+        }
+        return context
+
+    def get(self, request, *args, **kwargs):
+        template_name = 'ticket/ticketResumen.html'
+        return render(request, template_name, self.get_context_data())
 
 
 class TicketTrabajar(View):

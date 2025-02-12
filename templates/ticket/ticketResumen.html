@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load static %}
+{% block navbar %}
+    <nav aria-label="breadcrumb" class="flex hidden flex-1 xl:block">
+        <ol class="flex items-center text-theme-1 dark:text-slate-300 text-white/90">
+            <li class="">
+                <a href="/">Sistema</a>
+            </li>
+            <li class="relative ml-5 pl-0.5 before:content-[''] before:w-[14px] before:h-[14px] before:bg-chevron-white before:transform before:rotate-[-90deg] before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0 dark:before:bg-chevron-white text-white/70">
+                <a href="{% url 'TicketHome' %}">Soporte</a>
+            </li>
+            <li class="relative ml-5 pl-0.5 before:content-[''] before:w-[14px] before:h-[14px] before:bg-chevron-white before:transform before:rotate-[-90deg] before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0 dark:before:bg-chevron-white text-white/70">
+                <a href="">Trabajar</a>
+            </li>
+        </ol>
+    </nav>
+{% endblock %}
+{% block main %}
+    <div class="content transition-[margin,width] duration-100 pl-5 xl:pl-10 pr-5 mt-[65px] pt-[31px] pb-16 relative z-10 content--compact xl:ml-[275px] [&.content--compact]:xl:ml-[91px]">
+                <div class="container">
+                    <div class="grid grid-cols-12 gap-x-6 gap-y-10">
+                        <div class="col-span-12">
+                            <div class="mt-10">
+                                <div class="tab-content">
+                                    <div data-transition="" data-selector=".active" data-enter="transition-[visibility,opacity] ease-linear duration-150" data-enter-from="!p-0 !h-0 overflow-hidden invisible opacity-0" data-enter-to="visible opacity-100" data-leave="transition-[visibility,opacity] ease-linear duration-150" data-leave-from="visible opacity-100" data-leave-to="!p-0 !h-0 overflow-hidden invisible opacity-0" id="example-1" role="tabpanel" aria-labelledby="example-1-tab" class="tab-pane active">
+                                        <div class="mt-3.5 grid grid-cols-12 gap-x-6 gap-y-7">
+                                            <div class="col-span-12 xl:col-span-8">
+                                                <div class="flex flex-col gap-y-7">
+                                                    <div class="box box--stacked flex flex-col p-5">
+                                                        <div class="mb-5 border-b border-dashed border-slate-300/70 pb-5 text-[0.94rem] font-medium">
+                                                            Actividad del Ticket {{ ticket.id }}
+                                                        </div>
+                                                        <div class="-my-3">
+                                                            <div class="relative overflow-hidden before:absolute before:inset-y-0 before:left-0 before:ml-[14px] before:w-px before:bg-slate-200/60 before:content-[''] before:dark:bg-darkmode-400">
+                                                                <div class="mb-3 last:mb-0 relative first:before:content-[''] first:before:h-1/2 first:before:w-5 first:before:bg-white first:before:absolute last:after:content-[''] last:after:h-1/2 last:after:w-5 last:after:bg-white last:after:absolute last:after:bottom-0">
+                                                                    <div class="px-4 py-3 ml-8 before:content-[''] before:ml-1 before:absolute before:w-5 before:h-5 before:bg-slate-200 before:rounded-full before:inset-y-0 before:my-auto before:left-0 before:dark:bg-darkmode-300 before:z-10 after:content-[''] after:absolute after:w-1.5 after:h-1.5 after:bg-slate-500 after:rounded-full after:inset-y-0 after:my-auto after:left-0 after:ml-[11px] after:dark:bg-darkmode-200 after:z-10 font-medium text-primary">
+                                                                        Ingreso {{ ticket.fecha_creacion }}
+                                                                        <div class="mt-1.5 flex flex-col gap-y-1.5 text-[0.8rem] leading-relaxed text-slate-500 sm:flex-row sm:items-center">
+                                                                            <span class="text-primary">Titulo:</span>
+                                                                            {{ ticket.tema_ayuda }}
+                                                                        </div>
+                                                                        <div class="mt-1.5 text-xs text-slate-500">
+                                                                            <span class="text-primary">Detalle:</span>
+                                                                            {{ ticket.tema_ayuda_detalle }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 last:mb-0 relative first:before:content-[''] first:before:h-1/2 first:before:w-5 first:before:bg-white first:before:absolute last:after:content-[''] last:after:h-1/2 last:after:w-5 last:after:bg-white last:after:absolute last:after:bottom-0">
+                                                                    <div class="px-4 py-3 ml-8 before:content-[''] before:ml-1 before:absolute before:w-5 before:h-5 before:bg-slate-200 before:rounded-full before:inset-y-0 before:my-auto before:left-0 before:dark:bg-darkmode-300 before:z-10 after:content-[''] after:absolute after:w-1.5 after:h-1.5 after:bg-slate-500 after:rounded-full after:inset-y-0 after:my-auto after:left-0 after:ml-[11px] after:dark:bg-darkmode-200 after:z-10">
+                                                                        <a class="font-medium text-primary" href="">
+                                                                            Analisis: {{ ticket.causaRaiz }}
+                                                                        </a>
+                                                                        <div class="mt-1.5 flex flex-col gap-y-1.5 text-[0.8rem] leading-relaxed text-slate-500 sm:flex-row sm:items-center">
+                                                                            {{ ticket.accionAplicada }}
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                {% for ticketMovimientos in ticketMovimiento %}
+                                                                <div class="mb-3 last:mb-0 relative first:before:content-[''] first:before:h-1/2 first:before:w-5 first:before:bg-white first:before:absolute last:after:content-[''] last:after:h-1/2 last:after:w-5 last:after:bg-white last:after:absolute last:after:bottom-0">
+                                                                    <div class="px-4 py-3 ml-8 before:content-[''] before:ml-1 before:absolute before:w-5 before:h-5 before:bg-slate-200 before:rounded-full before:inset-y-0 before:my-auto before:left-0 before:dark:bg-darkmode-300 before:z-10 after:content-[''] after:absolute after:w-1.5 after:h-1.5 after:bg-slate-500 after:rounded-full after:inset-y-0 after:my-auto after:left-0 after:ml-[11px] after:dark:bg-darkmode-200 after:z-10">
+                                                                        <a class="font-medium text-primary" href="">
+                                                                            {{ ticketMovimientos.operador.last_name }}, {{ ticketMovimientos.operador.first_name }}
+                                                                        </a>
+                                                                        <div class="mt-1.5 flex flex-col gap-y-1.5 text-[0.8rem] leading-relaxed text-slate-500 sm:flex-row sm:items-center">
+                                                                           {{ ticketMovimientos.fecha }}
+                                                                            <span class="group flex items-center text-xs font-medium rounded-md sm:ml-2 border px-1.5 py-px mr-auto sm:mr-0 [&.primary]:text-primary [&.primary]:bg-primary/10 [&.primary]:border-primary/10 [&.success]:text-success [&.success]:bg-success/10 [&.success]:border-success/10 [&.warning]:text-warning [&.warning]:bg-warning/10 [&.warning]:border-warning/10 [&.info]:text-info [&.info]:bg-info/10 [&.info]:border-info/10 {{ ticketMovimientos.estado_nuevo.color}} }}">
+                                                                                <span class="mr-1.5 h-1.5 w-1.5 rounded-full group-[.info]:bg-info/80 group-[.primary]:bg-primary/80 group-[.success]:bg-success/80 group-[.warning]:bg-warning/80"></span>
+                                                                                <span class="-mt-px">
+                                                                                    {{ ticketMovimientos.estado_nuevo }}
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="mt-1.5 text-xs text-slate-500">
+                                                                            {{ ticketMovimientos.comentario | safe}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% if ticket.asignado_a.id == user.id %}
+                                                        <div class="box box--stacked flex flex-col">
+                                                            <div class="p-5">
+                                                                <a href="{% url 'TicketTrabajar' ticket=ticket.id %}" data-tw-merge="" class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed dark:border-primary w-full border-dashed border-primary/20 bg-white text-primary hover:bg-primary/20">Trabajar
+                                                                    <i data-tw-merge="" data-lucide="file-signature" class="ml-2 h-4 w-4 stroke-[1.3]"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="relative col-span-12 row-start-1 xl:col-span-4 xl:col-start-9">
+                                                <div class="sticky top-[6.2rem] flex flex-col gap-y-7">
+                                                    <div class="box box--stacked flex flex-col p-5">
+                                                        <div class="mb-5 border-b border-dashed border-slate-300/70 pb-5 text-[0.94rem] font-medium">
+                                                            Informacion Adicional
+                                                        </div>
+                                                        <div class="flex flex-col gap-8">
+                                                            <div>
+                                                                <div class="text-xs uppercase text-slate-500">
+                                                                    Trasferencias
+                                                                </div>
+                                                                <div class="mt-3.5">
+                                                                    {% for tickeTransferencia in tickeTransferencias %}
+                                                                        <div class="mt-6 flex items-center">
+                                                                            <i data-tw-merge="" data-lucide="move-left" class="mr-2 h-4 w-4 stroke-[1.3] text-slate-500"></i>
+                                                                            {{ tickeTransferencia.operador_anterior.last_name }}, {{ tickeTransferencia.operador_anterior.first_name }} | {{ tickeTransferencia.fecha }}
+                                                                        </div>
+                                                                        <div class="mt-3 flex items-center">
+                                                                            Comentario:  {{ tickeTransferencia.comentario }}
+                                                                        </div>
+                                                                        <div class="mt-3 flex items-center">
+                                                                            <i data-tw-merge="" data-lucide="move-right" class="mr-2 h-4 w-4 stroke-[1.3] text-slate-500"></i>
+                                                                            {{ tickeTransferencia.operador_nuevo.last_name }}, {{ tickeTransferencia.operador_nuevo.first_name }}
+                                                                        </div><br>
+                                                                        <hr>
+                                                                    {% endfor %}
+                                                                    {% if ticket.asignado_a.id == user.id %}
+                                                                        <button id="open-modal-btn" data-id="{{ ticket.id }}" data-tw-merge="" class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed dark:border-primary mt-5 w-full border-primary/20 bg-white text-primary hover:bg-primary/20 js-trasferir">
+                                                                            Trasferir <i data-tw-merge="" data-lucide="arrow-right" class="mr-2 h-4 w-4 stroke-[1.3]"></i></button>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="mb-5 border-b border-dashed border-slate-300/70 pb-5 text-[0.94rem] font-medium">
+                                                                    Informacion de contacto
+                                                                </div>
+                                                                <div class="mt-3.5">
+                                                                    <div class="flex items-center">
+                                                                        <i data-tw-merge="" data-lucide="clipboard" class="mr-2 h-4 w-4 stroke-[1.3] text-slate-500"></i>
+                                                                        Email:
+                                                                        <a class="ml-1 whitespace-nowrap text-primary underline decoration-primary/30 decoration-dotted underline-offset-[3px]" href="">
+                                                                            {{ ticket.usuario_mail }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="mt-3 flex items-center">
+                                                                        <i data-tw-merge="" data-lucide="calendar" class="mr-2 h-4 w-4 stroke-[1.3] text-slate-500"></i>
+                                                                        Celular:
+                                                                        <a class="ml-1 whitespace-nowrap text-primary underline decoration-primary/30 decoration-dotted underline-offset-[3px]" href="">
+                                                                            {{ ticket.usuario_telefono }}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="text-xs uppercase text-slate-500">
+                                                                    Estadisticas
+                                                                </div>
+                                                                <div class="mt-3.5">
+                                                                    <div class="mt-3 flex items-center">
+                                                                        <i data-tw-merge="" data-lucide="clock" class="mr-2 h-4 w-4 stroke-[1.3] text-slate-500"></i>
+                                                                        Tiempo de trabajo:
+                                                                        <div class="ml-1 flex items-center rounded-md border border-success/10 bg-success/10 px-1.5 py-px text-xs font-medium text-success">
+                                                                            <span class="-mt-px">5 Members</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Modal -->
+<div data-tw-backdrop="" aria-hidden="true" tabindex="-1" style="z-index: 1050" id="superlarge-modal-size-preview" class="modal group bg-gradient-to-b from-theme-1/50 via-theme-2/50 to-black/50 transition-[visibility,opacity] w-screen h-screen fixed left-0 top-0 [&:not(.show)]:duration-[0s,0.2s] [&:not(.show)]:delay-[0.2s,0s] [&:not(.show)]:invisible [&:not(.show)]:opacity-0 [&.show]:visible [&.show]:opacity-100 [&.show]:duration-[0s,0.4s]">
+    <div data-tw-merge class="w-[90%] mx-auto bg-white relative rounded-md shadow-md transition-[margin-top,transform] duration-[0.4s,0.3s] -mt-16 group-[.show]:mt-16 group-[.modal-static]:scale-[1.05] dark:bg-darkmode-600 sm:w-[600px] lg:w-[900px] p-10 text-center">
+        <div id="modal-content">
+            ¡Este es un modal grande y dinámico!
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        // Abrir el modal con efecto
+        $("#open-modal-btn").click(function(event){
+            event.preventDefault();
+            $("#superlarge-modal-size-preview").addClass("show");
+        });
+
+        // Cerrar el modal al hacer clic en el botón de cerrar
+        $("#close-modal-btn").click(function(){
+            $("#superlarge-modal-size-preview").removeClass("show");
+        });
+
+        // Cerrar modal al hacer clic fuera del contenido
+        $("#superlarge-modal-size-preview").click(function(event){
+            if(event.target === this) {
+                $(this).removeClass("show");
+            }
+        });
+
+        $(".js-trasferir").click(function(){
+            var btn = $(this);
+            $.ajax({
+                url: '{% url 'TickeTrasferir' %}',
+                type: 'get',
+                data: {id: btn.attr("data-id")},
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#modal-content").html("Cargando...");
+                    $("#superlarge-modal-size-preview").addClass("show");
+                },
+                success: function (data) {
+                    $("#modal-content").html(data.html_form);
+                },
+                error: function () {
+                    $("#modal-content").html("Error al cargar el contenido.");
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
