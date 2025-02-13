@@ -14,19 +14,31 @@ class TicketHomeGestion(View):
 
     def get_context_data(self, **kwargs):
         opcion = self.kwargs.get('opcion')
+        oTicket = Ticket.objects.all()
+        oEstadosTicket = EstadoTicket.objects.all().order_by('id')
+        dicDatos = []
+        for registroEstados in oEstadosTicket:
+            dicDatos.append({
+                'estadoDestacado': registroEstados.destacado,
+                'estadoNombre': registroEstados.nombre,
+                'estadoCantidad': oTicket.filter(estado=registroEstados.id).count(),
+                'estadoColor': registroEstados.color,
+                'estadoIcono': registroEstados.dataLucide,
+            })
         if opcion:
-            oTicket = Ticket.objects.filter(estado=opcion).order_by('-fecha_creacion')
+            oTicket = oTicket.filter(estado=opcion).order_by('-fecha_creacion')
             estadoNombre = EstadoTicket.objects.get(id=opcion).nombre
         else:
-            oTicket = Ticket.objects.filter(estado=1).order_by('-fecha_creacion')
+            oTicket = oTicket.filter(estado=1).order_by('-fecha_creacion')
             estadoNombre = 'Pendiente'
 
         context = {
             'titulo': "Soporte",
             'tituloOpcion': "Tickets "+estadoNombre,
-            'misticket': Ticket.objects.filter(estado=1, asignado_a=self.request.user).order_by('-fecha_creacion'),
+            'misticket': oTicket.filter(estado=1, asignado_a=self.request.user).order_by('-fecha_creacion'),
             'ticket': oTicket,
-            'estados': EstadoTicket.objects.all(),
+            'datos': dicDatos,
+            'estados': oEstadosTicket,
         }
         return context
 

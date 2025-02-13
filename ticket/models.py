@@ -24,6 +24,8 @@ class NivelServicio(models.Model):
 class EstadoTicket(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     color = models.CharField(max_length=10, blank=True,  null=True)
+    dataLucide = models.CharField(max_length=20, blank=True,  null=True)
+    destacado = models.BooleanField(default=False)
 
     def __str__(self):
         return self.nombre
