@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+{% block navbar %}
+    <nav aria-label="breadcrumb" class="flex hidden flex-1 xl:block">
+        <ol class="flex items-center text-theme-1 dark:text-slate-300 text-white/90">
+            <li class="">
+                <a href="/">Sistema</a>
+            </li>
+            <li class="relative ml-5 pl-0.5 before:content-[''] before:w-[14px] before:h-[14px] before:bg-chevron-white before:transform before:rotate-[-90deg] before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0 dark:before:bg-chevron-white text-white/70">
+                <a href="{% url 'TicketHome' %}">Soporte</a>
+            </li>
+            <li class="relative ml-5 pl-0.5 before:content-[''] before:w-[14px] before:h-[14px] before:bg-chevron-white before:transform before:rotate-[-90deg] before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0 dark:before:bg-chevron-white text-white/70">
+                <a href="">Trabajar</a>
+            </li>
+        </ol>
+    </nav>
+{% endblock %}
+{% block main %}
+    <div class="content transition-[margin,width] duration-100 pl-5 xl:pl-10 pr-5 mt-[65px] pt-[31px] pb-16 relative z-10 content--compact xl:ml-[275px] [&.content--compact]:xl:ml-[91px]">
+                <div class="container">
+                    <div class="grid grid-cols-12 gap-x-6 gap-y-10">
+                        <div class="col-span-12">
+                            <div class="mt-3.5 grid grid-cols-12 gap-x-6 gap-y-10">
+                                <div class="col-span-12 xl:col-span-8">
+                                    <div class="box box--stacked flex flex-col p-5 sm:p-14">
+                                        <div class="flex flex-col gap-y-7 rounded-lg border border-primary/5 bg-primary/[0.03] px-8 py-12 sm:-mx-10 sm:-mt-10 sm:px-10 sm:py-16 md:flex-row">
+                                            <div class="flex flex-col justify-center">
+                                                <div class="-mt-1 text-lg font-medium text-primary">
+                                                    TICKET # {{ ticket.id }} - Nivel {{ ticket.nivel_servicio.nombre }}
+                                                </div>
+                                                <div class="mt-1">
+                                                    CREADO: {{ ticket.fecha_creacion }}
+                                                </div>
+                                                <div class="mt-1 flex flex-col gap-1">
+                                                    <div>Asunto: {{ ticket.tema_ayuda }}</div>
+                                                    <div>Detalle</div>
+                                                    <div>{{ ticket.tema_ayuda_detalle }}</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="mt-6 flex flex-col px-8 pt-4 sm:flex-row sm:px-0">
+                                            <div>
+                                                <div class="mt-1.5 flex flex-col gap-1">
+                                                    <div class="text-primary">Análisis Causa Raíz</div>
+                                                    <div>{{ ticket.causaRaiz }}</div>
+                                                    <div class="text-primary">Descripción de la Acción Aplicada</div>
+                                                    <div>{{ ticket.accionAplicada }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form id="TicketMovimientoFormNuevo" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="ticket" value="{{ ticket.id }}">
+                                            <input type="hidden" name="estado_anterior" value="{{ ticket.estado.id }}">
+                                            <div class="mt-6 flex flex-col px-8 pt-4 sm:flex-row sm:px-0">
+                                                <div>
+                                                    <div class="mt-1.5 flex flex-col gap-1">
+                                                        <div class="text-primary">Observacion</div>
+                                                        <div id="comentarioCK"></div>
+                                                        <div class="text-primary">Actualizar estado</div>
+                                                        <div class="mt-1 text-slate-500">
+                                                            <select name="estado_nuevo" id="estado_nuevo" data-placeholder="Seleccione" class="tom-select w-full">
+                                                                {% for estados in estado %}
+                                                                    {% if estados.id == ticket.estado.id %}
+                                                                        <option value="{{ estados.id }}" selected>{{ estados.nombre }}</option>
+                                                                    {% else %}
+                                                                        <option value="{{ estados.id }}">{{ estados.nombre }}</option>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-6 flex border-t border-dashed border-slate-300/70 pt-5 md:justify-end">
+                                                        <input type="hidden" name="comentario" id="comentario">
+                                                        <button type="submit" data-tw-merge="" class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed text-primary dark:border-primary [&:hover:not(:disabled)]:bg-primary/10 w-full border-primary/50 px-4 md:w-auto">Actualizar ticket</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-span-12 xl:col-span-4">
+                                    <div class="box box--stacked flex flex-col p-5">
+                                        <div class="mb-5 border-b border-dashed border-slate-300/70 pb-5 text-[0.94rem] font-medium">
+                                            Historial
+                                        </div>
+                                        <div>
+                                            <div class="mt-8">
+                                                <div class="tab-content mt-3">
+                                                    <div data-transition="" data-selector=".active" data-enter="transition-[visibility,opacity] ease-linear duration-150" data-enter-from="!p-0 !h-0 overflow-hidden invisible opacity-0" data-enter-to="visible opacity-100" data-leave="transition-[visibility,opacity] ease-linear duration-150" data-leave-from="visible opacity-100" data-leave-to="!p-0 !h-0 overflow-hidden invisible opacity-0" id="example-1" role="tabpanel" aria-labelledby="example-1-tab" class="tab-pane active">
+                                                        <div class="rounded-[0.6rem] border border-dashed border-slate-300/80">
+                                                            {% for movimientos in movimientos %}
+                                                            <div class="flex cursor-pointer items-center border-b border-dashed border-slate-300/80 px-5 py-4 last:border-0 last:border-b-0 hover:bg-slate-50">
+                                                                <div>
+                                                                    <div class="max-w-[12rem] truncate font-medium text-primary">
+                                                                        {{ movimientos.operador.last_name }}, {{ movimientos.operador.first_name }}
+                                                                    </div>
+                                                                    <div class="mt-0.5 whitespace-nowrap text-slate-500">
+                                                                        {{ movimientos.fecha }}
+                                                                    </div>
+                                                                    <div class="mt-1.5 text-xs text-slate-500">
+                                                                        {{ movimientos.comentario | safe }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script src="{% static 'dist/js/vendors/ckeditor/classic.js' %}"></script>
+    <script>
+        let editorInstance;
+        ClassicEditor
+            .create(document.querySelector('#comentarioCK'))
+            .then(editor => {
+                editorInstance = editor;  // Guardamos la instancia para poder acceder a su contenido
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        // Función para obtener el valor del editor
+        function obtenerContenido() {
+            if (editorInstance) {
+                let contenido = editorInstance.getData();
+                console.log(contenido); // Aquí puedes enviarlo al backend o hacer lo que necesites
+                return contenido;
+            }
+            return "";
+        }
+
+        document.getElementById('TicketMovimientoFormNuevo').addEventListener('submit', function () {
+        document.getElementById('comentario').value = editorInstance.getData();
+    });
+    </script>
+{% endblock %}

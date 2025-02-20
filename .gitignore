@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 general/__pycache__/__init__.cpython-310.pyc
 
 general/__pycache__/admin.cpython-310.pyc
@@ -94,3 +95,8 @@ ticket/migrations/__pycache__/0016_estadoticket_destacado.cpython-310.pyc
 ticket/migrations/__pycache__/0017_estadoticket_datalucide.cpython-310.pyc
 
 ticket/migrations/__pycache__/0018_alter_estadoticket_datalucide.cpython-310.pyc
+=======
+general/migrations/__pycache__/
+
+*.pyc
+>>>>>>> feature/001-00FG

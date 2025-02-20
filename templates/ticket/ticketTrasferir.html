@@ -1,0 +1,57 @@
+
+<form id="form_alta" action="{% url 'TickeTrasferir' %}" method="post" enctype="multipart/form-data">
+<input type="hidden" name="ticket" value="{{ ticket.id }}">
+<input type="hidden" name="operador_anterior" value="{{ ticket.asignado_a.id }}">
+{% csrf_token %}
+    <div class="modal-body">
+        <div class="mb-6 border-b border-dashed border-slate-300/70 pb-5 text-[0.94rem] font-medium">
+            Trasferir Ticket
+        </div>
+            <div>
+                <div class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
+                    <div class="mb-2 inline-block sm:mb-0 sm:mr-5 sm:text-right xl:mr-14 xl:w-60">
+                        <div class="text-left">
+                            <div class="flex items-center">
+                                <div class="font-medium">Nuevo Operador</div>
+                                <div class="ml-2.5 rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-darkmode-300 dark:text-slate-400">
+                                    Requerido
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 w-full flex-1 xl:mt-0">
+                        <select name="operador_nuevo" id="operador_nuevo" data-placeholder="Seleccione" class="tom-select w-full">
+                            {% for operadores in operador_nuevo %}
+                                {% if ticket.asignado_a.id == operadores.id %}
+                                    <option value="{{ operadores.id }}" selected>{{ operadores.last_name }}, {{ operadores.first_name }}</option>
+                                {% else %}
+                                    <option value="{{ operadores.id }}">{{ operadores.last_name }}, {{ operadores.first_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
+                    <div class="mb-2 inline-block sm:mb-0 sm:mr-5 sm:text-right xl:mr-14 xl:w-60">
+                        <div class="text-left">
+                            <div class="flex items-center">
+                                <div class="font-medium">Motivo</div>
+                                <div class="ml-2.5 rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-darkmode-300 dark:text-slate-400">
+                                    Requerido
+                                </div>
+                            </div>
+                            <div class="mt-1.5 text-xs leading-relaxed text-slate-500/80 xl:mt-3">
+                                Correo electronico (si no registra).
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 w-full flex-1 xl:mt-0">
+                        <textarea style="width: 100%" name="comentario"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex border-t border-dashed border-slate-300/70 pt-5 md:justify-end">
+                <button type="submit" data-tw-merge="" class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed text-primary dark:border-primary [&:hover:not(:disabled)]:bg-primary/10 w-full border-primary/50 px-4 md:w-auto">Trasferir ticket</button>
+            </div>
+    </div>
+</form>
