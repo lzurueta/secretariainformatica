@@ -153,8 +153,8 @@ class TicketTrabajar(View):
 
 
 
-class TicketNuevo(View):
-    template_name = 'ticket/ticketNuevo.html'
+class TicketNuevoPub(View):
+    template_name = 'general/ticketNuevo.html'
     form = TicketForm()
 
     def get_context_data(self, **kwargs):
