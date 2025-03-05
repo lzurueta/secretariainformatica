@@ -177,8 +177,12 @@ class TicketNuevoPub(View):
     def post(self, request, *args, **kwargs):
         form = TicketForm(request.POST)
         if form.is_valid():
+            print('Entre')
             form.save(commit=False)
-            form.instance.usuario_solicitante = User.objects.get(username=request.POST['usuario_solicitante'])
+            if User.objects.get(username=request.POST['usuario_solicitante']):
+                form.instance.usuario_solicitante = User.objects.get(username=request.POST['usuario_solicitante'])
+            else:
+                form.instance.usuario_solicitante = request.POST['usuario_solicitante']
             form.instance.nivel_servicio = NivelServicio.objects.get(id=request.POST['nivel_servicio'])
             form.save()
             return redirect("TicketHome")

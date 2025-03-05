@@ -125,7 +125,7 @@
             $(".js-editar").click(function(){
                 var btn = $(this);
                 $.ajax({
-                    url: '{% url 'TicketNuevoPub' %}',
+                    url: '{% url 'TicketNuevo' %}',
                     type: 'get',
                     data: {id: btn.attr("data-id")},
                     dataType: 'json',
