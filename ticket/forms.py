@@ -29,6 +29,7 @@ class EstadoTicketForm(forms.ModelForm):
         }
 
 class TicketForm(forms.ModelForm):
+
     class Meta:
         model = Ticket
         fields = [
@@ -37,7 +38,6 @@ class TicketForm(forms.ModelForm):
             'usuario_fuente',
             'tema_ayuda',
             'tema_ayuda_detalle',
-            'asignado_a',
         ]
 
     def __init__(self, *args, user=None, **kwargs):

@@ -153,8 +153,8 @@ class TicketTrabajar(View):
 
 
 
-class TicketNuevo(View):
-    template_name = 'ticket/ticketNuevo.html'
+class TicketNuevoPub(View):
+    template_name = 'general/ticketNuevo.html'
     form = TicketForm()
 
     def get_context_data(self, **kwargs):
@@ -177,8 +177,12 @@ class TicketNuevo(View):
     def post(self, request, *args, **kwargs):
         form = TicketForm(request.POST)
         if form.is_valid():
+            print('Entre')
             form.save(commit=False)
-            form.instance.usuario_solicitante = User.objects.get(username=request.POST['usuario_solicitante'])
+            if User.objects.get(username=request.POST['usuario_solicitante']):
+                form.instance.usuario_solicitante = User.objects.get(username=request.POST['usuario_solicitante'])
+            else:
+                form.instance.usuario_solicitante = request.POST['usuario_solicitante']
             form.instance.nivel_servicio = NivelServicio.objects.get(id=request.POST['nivel_servicio'])
             form.save()
             return redirect("TicketHome")
