@@ -18,13 +18,3 @@ class MenuGrupoAdmin(admin.ModelAdmin):
 
 admin.site.register(MenuGrupo, MenuGrupoAdmin)
 
-from django.contrib import admin
-from .models import Area, Usuario, Idea, Proyecto, Etapa, HoraCargada, Insumo
-
-admin.site.register(Area)
-admin.site.register(Usuario)
-admin.site.register(Idea)
-admin.site.register(Proyecto)
-admin.site.register(Etapa)
-admin.site.register(HoraCargada)
-admin.site.register(Insumo)
